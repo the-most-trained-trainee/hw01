@@ -29,14 +29,12 @@ function removeContact(contactId) {
 }
 
 function addContact(name, email, phone) {
-
   let newContact = {
     id: '0',
     name: name.toString(),
     email: email.toString(),
     phone: phone.toString()
   }
-
   fs.readFile(contactsPath)
     .then(data => JSON.parse(data))
     .then(contacts => contacts.map(contact => parseInt(contact.id)))
@@ -51,8 +49,5 @@ function addContact(name, email, phone) {
     }))
     .catch(err => console.log(err.message))
 }
-
-
-
 
 module.exports = { listContacts, getContactById, removeContact, addContact }
