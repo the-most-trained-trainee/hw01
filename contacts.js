@@ -1,5 +1,5 @@
-const path = require('path');
 const fs = require('fs').promises;
+const path = require('path')
 
 const contactsPath = path.join(__dirname, 'db', 'contacts.json')
 
@@ -25,6 +25,7 @@ function removeContact(contactId) {
         console.error(err);
       };
     }))
+    .then(res => listContacts())
     .catch(err => console.log(err.message))
 }
 
@@ -47,7 +48,9 @@ function addContact(name, email, phone) {
         console.error(err);
       };
     }))
+    .then(res => listContacts())
     .catch(err => console.log(err.message))
 }
+
 
 module.exports = { listContacts, getContactById, removeContact, addContact }

@@ -1,9 +1,40 @@
-const { listContacts } = require('./contacts');
-console.log(testdata)
+const { listContacts, getContactById, removeContact, addContact } = require('./contacts');
+const { Command } = require("commander");
 
-// Зроби імпорт модуля contacts.js в файлі index.js та перевір працездатність функції для роботи з контактами.
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// https://www.edu.goit.global/uk/learn/5265254/2439558/2439561/homework
-// https://www.youtube.com/watch?v=3aGSqasVPsI
-// https://www.youtube.com/watch?v=TVINW3atTE0&t=4939s
-// https://youtu.be/yWgcVhwr3Ak
+program.parse(process.argv);
+
+const argv = program.opts();
+
+// TODO: рефакторить
+function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      listContacts();
+      break;
+
+    case "get":
+      getContactById(id);
+      break;
+
+    case "add":
+      addContact(name, email, phone);
+      break;
+
+    case "remove":
+      removeContact(id)
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
